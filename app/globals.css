@@ -12,30 +12,39 @@ body {
   .flex-center {
     @apply flex justify-center items-center;
   }
+
   .flex-between {
     @apply flex justify-between items-center;
   }
+
   .flex-start {
     @apply flex justify-start items-center;
   }
+
   .card-wrapper {
     @apply bg-light-900 dark:dark-gradient shadow-light-100 dar;
   }
+
   .btn {
     @apply bg-light-800 dark:bg-dark-300 !important;
   }
+
   .btn-secondary {
     @apply bg-light-800 dark:bg-dark-400 !important;
   }
+
   .btn-tertiary {
     @apply bg-light-700 dark:bg-dark-300 !important;
   }
+
   .markdown {
-    @apply max-w-full prose dark:prose-p:text-light-700 dark:pros;
+    @apply max-w-full prose dark: prose-p:text-light-700 dark:prose;
   }
+
   .primary-gradient {
     background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
   }
+
   .dark-gradient {
     background: linear-gradient(
       232deg,
@@ -43,11 +52,13 @@ body {
       rgba(19, 22, 28, 0.7) 100%
     );
   }
+
   .tab {
-    @apply min-h-full dark:bg-dark-400 bg-light-800 text-light-5;
+    @apply min-h-full dark: bg-dark-400 bg-light-800 text-light-5;
   }
+
   .no-focus {
-    @apply focus-visible:ring-0 focus-visible:ring-transparent focus;
+    @apply focus-visible:ring-0 focus-visible:ring-transparent;
   }
 }
 
@@ -76,13 +87,16 @@ body {
   height: 3px;
   border-radius: 2px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: #ffffff;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 50px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
@@ -113,16 +127,19 @@ word-break: break-all;
   padding: 2px;
   color: #ff7000 !important;
 }
+
 .markdown pre {
   display: grid;
   width: 100%;
 }
+
 .markdown pre code {
   width: 100%;
   display: block;
   overflow-x: auto;
   color: inherit !important;
 }
+
 /* Markdown End */
 
 /* Clerk */
@@ -143,6 +160,8 @@ word-break: break-all;
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
