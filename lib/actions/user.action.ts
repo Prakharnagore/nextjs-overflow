@@ -54,7 +54,6 @@ export const updateUser = async (params: UpdateUserParams) => {
     throw error;
   }
 };
-
 export const deleteUser = async (params: DeleteUserParams) => {
   try {
     connectToDatabase();
