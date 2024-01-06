@@ -2,6 +2,11 @@
   "name": "nextjs",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "prakhar nagore",
+    "email": "prakharnagore000@gmail.com",
+    "url": "https://www.linkedin.com/in/prakharnagore/"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,6 +21,7 @@
     "@radix-ui/react-menubar": "^1.0.4",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
     "@tailwindcss/typography": "^0.5.10",
     "@tinymce/tinymce-react": "^4.3.2",
     "class-variance-authority": "^0.7.0",
@@ -23,12 +29,14 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
+    "html-react-parser": "^5.0.11",
     "install": "^0.13.0",
     "lucide-react": "^0.293.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
     "next": "14.0.3",
     "prettier": "^3.1.0",
+    "prismjs": "^1.29.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
@@ -39,6 +47,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/prismjs": "^1.26.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
