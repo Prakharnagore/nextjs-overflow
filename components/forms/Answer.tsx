@@ -29,7 +29,7 @@ interface Props {
 const Answer = ({ question, questionId, authorId }: Props) => {
   const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmittingAI, setIsSubmittingAI] = useState(false);
+  const [isSubmittingAI] = useState(false); // setIsSubmittingAI
 
   const pathname = usePathname();
   const editorRef = useRef(null);
