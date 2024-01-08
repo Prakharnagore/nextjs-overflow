@@ -25,7 +25,7 @@ export default async function Home() {
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
           route="/"
-          iconsPosition="left"
+          iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"
           otherClasses="flex-1"
@@ -46,7 +46,7 @@ export default async function Home() {
               title={question.title}
               tags={question.tags}
               author={question.author}
-              upvotes={question.upvotes}
+              upvotes={question.upvotes.length}
               views={question.views}
               answers={question.answers}
               createdAt={question.createdAt}

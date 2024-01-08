@@ -6,7 +6,7 @@ import React from "react";
 
 interface CustomInputProps {
   route: string;
-  iconsPosition: string;
+  iconPosition: string;
   imgSrc: string;
   placeholder: string;
   otherClasses?: string;
@@ -14,7 +14,7 @@ interface CustomInputProps {
 
 const LocalSearchbar = ({
   route,
-  iconsPosition,
+  iconPosition,
   imgSrc,
   placeholder,
   otherClasses,
@@ -23,7 +23,7 @@ const LocalSearchbar = ({
     <div
       className={`background-light800_darkgradient flex min-h-[56px] grow items-center gap-4 rounded-[10px] px-4 ${otherClasses}`}
     >
-      {iconsPosition === "left" && (
+      {iconPosition === "left" && (
         <Image
           alt="Search Icon"
           src={imgSrc}
@@ -39,7 +39,7 @@ const LocalSearchbar = ({
         onChange={() => {}}
         className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none"
       />
-      {iconsPosition === "right" && (
+      {iconPosition === "right" && (
         <Image
           alt="Search Icon"
           src={imgSrc}
