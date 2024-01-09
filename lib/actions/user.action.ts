@@ -7,6 +7,7 @@ import {
   DeleteUserParams,
   GetAllUsersParams,
   GetSavedQuestionsParams,
+  GetUserByIdParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
@@ -14,6 +15,7 @@ import { revalidatePath } from "next/cache";
 import Question from "@/database/question.modal";
 import Tag from "@/database/tag.model";
 import { FilterQuery } from "mongoose";
+import Answer from "@/database/answer.modal";
 
 export const getUserById = async (params: any) => {
   try {
@@ -168,11 +170,37 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   }
 }
 
-// export async function name(params:any) {
+export const getUserInfo = async (params: GetUserByIdParams) => {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const totalQuestions = await Question.countDocuments({ author: user._id });
+    const totalAnswers = await Answer.countDocuments({ author: user._id });
+
+    return { user, totalQuestions, totalAnswers };
+    // get user by id
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// export const getAllUsers = async (params: GetAllUsersParams) => {
 //   try {
-//  connectToDatabase();
+//     connectToDatabase();
+
+//     // get user by id
+
 //   } catch (error) {
-//   console.log(error);
+//     console.log(error);
 //     throw error;
-// }
-// }
+//   }
+// };
