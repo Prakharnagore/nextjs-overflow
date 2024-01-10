@@ -7,6 +7,8 @@ import {
   DeleteUserParams,
   GetAllUsersParams,
   GetSavedQuestionsParams,
+  GetUserByIdParams,
+  GetUserStatsParams,
   ToggleSaveQuestionParams,
   UpdateUserParams,
 } from "./shared.types";
@@ -14,6 +16,7 @@ import { revalidatePath } from "next/cache";
 import Question from "@/database/question.modal";
 import Tag from "@/database/tag.model";
 import { FilterQuery } from "mongoose";
+import Answer from "@/database/answer.modal";
 
 export const getUserById = async (params: any) => {
   try {
@@ -168,11 +171,79 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   }
 }
 
-// export async function name(params:any) {
+export const getUserInfo = async (params: GetUserByIdParams) => {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await User.findOne({ clerkId: userId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const totalQuestions = await Question.countDocuments({ author: user._id });
+    const totalAnswers = await Answer.countDocuments({ author: user._id });
+
+    return { user, totalQuestions, totalAnswers };
+    // get user by id
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getUserQuestions = async (params: GetUserStatsParams) => {
+  try {
+    connectToDatabase();
+    // page = 1, pageSize = 10
+    const { userId } = params;
+    const totalQuestions = await Question.countDocuments({ author: userId });
+
+    const userQuestions = await Question.find({ author: userId })
+      .sort({
+        views: -1,
+        upvotes: -1,
+      })
+      .populate("tags", "_id name")
+      .populate("author", "_id clerkId name picture");
+
+    return { totalQuestions, questions: userQuestions };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+export const getUserAnswers = async (params: GetUserStatsParams) => {
+  try {
+    connectToDatabase();
+    // page = 1, pageSize = 10
+    const { userId } = params;
+    const totalAnswers = await Answer.countDocuments({ author: userId });
+
+    const userAnswers = await Answer.find({ author: userId })
+      .sort({
+        upvotes: -1,
+      })
+      .populate("question", "_id title")
+      .populate("author", "_id clerkId name picture");
+
+    return { totalAnswers, answers: userAnswers };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// export const getAllUsers = async (params: GetAllUsersParams) => {
 //   try {
-//  connectToDatabase();
+//     connectToDatabase();
+
+//     // get user by id
+
 //   } catch (error) {
-//   console.log(error);
+//     console.log(error);
 //     throw error;
-// }
-// }
+//   }
+// };
