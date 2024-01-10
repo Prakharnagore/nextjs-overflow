@@ -4,12 +4,16 @@ import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 
-interface QuestionProps {
+interface QuestionCardProps {
   _id: string;
   title: string;
-  tags: { _id: string; name: string }[];
+  tags: {
+    _id: string;
+    name: string;
+  }[];
   author: {
     _id: string;
+    clerkId: string;
     name: string;
     picture: string;
   };
@@ -17,9 +21,11 @@ interface QuestionProps {
   views: number;
   answers: Array<object>;
   createdAt: Date;
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({
+  clerkId,
   _id,
   title,
   tags,
@@ -28,7 +34,7 @@ const QuestionCard = ({
   views,
   answers,
   createdAt,
-}: QuestionProps) => {
+}: QuestionCardProps) => {
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
