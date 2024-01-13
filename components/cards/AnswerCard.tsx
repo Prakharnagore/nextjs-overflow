@@ -2,6 +2,7 @@ import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Metric from "../shared/Metric";
 import Link from "next/link";
 import { SignedIn } from "@clerk/nextjs";
+import EditDeleteAction from "../shared/EditDeleteAction";
 
 interface Props {
   clerkId?: string | null;
@@ -42,10 +43,9 @@ const AnswerCard = ({
             </h3>
           </div>
           <SignedIn>
-            {
-              showActionButtons && null
-              //   <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
-            }
+            {showActionButtons && (
+              <EditDeleteAction type="Answer" itemId={JSON.stringify(_id)} />
+            )}
           </SignedIn>
         </div>
 
