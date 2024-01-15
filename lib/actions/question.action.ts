@@ -205,6 +205,20 @@ export const editQuestion = async (params: EditQuestionParams) => {
   }
 };
 
+export const getTopQuestions = async () => {
+  try {
+    connectToDatabase();
+    const topQuestions = await Question.find({})
+      .sort({ views: -1, upvotes: -1 })
+      .limit(5);
+
+    return topQuestions;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // export async function name_() {
 //   try {
 //     connectToDatabase();
