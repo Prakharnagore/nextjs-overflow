@@ -10,7 +10,9 @@ import { SearchParamsProps } from "@/types";
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllUsers({
     searchQuery: searchParams?.q,
+    filter: searchParams?.filter,
   });
+
   return (
     <React.Fragment>
       <h1 className="h1-bold text-dark100_light900">All Users</h1>
