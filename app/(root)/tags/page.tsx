@@ -6,12 +6,16 @@ import NoResult from "@/components/shared/NoResult";
 import { getAllTags } from "@/lib/actions/tag.actions";
 import Link from "next/link";
 import { SearchParamsProps } from "@/types";
+import Pagination from "@/components/shared/Pagination";
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {
-  const result = await getAllTags({
+  const { tags, isNext } = await getAllTags({
     searchQuery: searchParams?.q,
     filter: searchParams?.filter,
+    page: searchParams?.page ? +searchParams?.page : 1,
   });
+
+  const pageNumber = searchParams?.page ? +searchParams?.page : 1;
 
   return (
     <React.Fragment>
@@ -30,8 +34,8 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
         />
       </div>
       <section className="mt-12 flex flex-wrap gap-4">
-        {result.tags.length > 0 ? (
-          result.tags.map((tag) => (
+        {tags.length > 0 ? (
+          tags.map((tag) => (
             <Link
               href={`/tags/${tag._id}`}
               key={tag._id}
@@ -61,6 +65,9 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
           />
         )}
       </section>
+      <div className="mt-10">
+        <Pagination pageNumber={pageNumber} isNext={isNext} />
+      </div>
     </React.Fragment>
   );
 };
