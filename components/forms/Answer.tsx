@@ -29,7 +29,7 @@ interface Props {
 const Answer = ({ question, questionId, authorId }: Props) => {
   const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmittingAI] = useState(false); // setIsSubmittingAI
+  const [isSubmittingAI, setIsSubmittingAI] = useState(false);
 
   const pathname = usePathname();
   const editorRef = useRef(null);
@@ -67,7 +67,44 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     }
   };
 
-  const generateAiAnswer = async () => {};
+  const generateAiAnswer = async () => {
+    if (!authorId) return;
+
+    setIsSubmittingAI(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
+        {
+          method: "POST",
+          body: JSON.stringify({ question }),
+        }
+      );
+
+      const aiAnswer = await response.json();
+
+      // converting plaintext to html
+      const formatedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent(formatedAnswer);
+      }
+
+      //  toast notification
+      return toast({
+        title: `${aiAnswer.reply && "Ai answer generated"}`,
+        description: "Ai answer generated successfully",
+      });
+    } catch (error: any) {
+      return toast({
+        title: `${error?.message}`,
+        variant: "destructive",
+        description: `${error?.code}`,
+      });
+    } finally {
+      setIsSubmittingAI(false);
+    }
+  };
 
   return (
     <div className="mt-8">
