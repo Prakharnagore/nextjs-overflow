@@ -12,6 +12,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Question details | Overflow",
+  description: "Question page of Overflow",
+};
+
 const Page = async ({ params, searchParams }: any) => {
   const result = await getQuestionById({ questionId: params.id });
   const { userId: clerkId } = auth();

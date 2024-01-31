@@ -12,6 +12,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile | Overflow",
+  description: "Profile page of Overflow",
+};
+
 const ProfileDetails = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
   const { user, totalQuestions, totalAnswers, badgeCounts, reputation } =

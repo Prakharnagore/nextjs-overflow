@@ -3,6 +3,13 @@ import { getUserById } from "@/lib/actions/user.action";
 import { ParamsProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit profile | Overflow",
+  description: "Edit profile page of Overflow",
+};
+
 const ProfileEdit = async ({ params }: ParamsProps) => {
   const { userId } = auth();
 
