@@ -42,6 +42,12 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   });
 
   const handleCreatAnswer = async (values: z.infer<typeof AnswerSchma>) => {
+    if (!authorId) {
+      return toast({
+        title: `Please login first`,
+        description: "You need to login to perform this action",
+      });
+    }
     setIsSubmitting(true);
     try {
       await createAnswer({

@@ -311,9 +311,12 @@ export const getRecommendedQuestions = async (params: RecommendedParams) => {
 
     // get distinct tag Ids for user interactions
 
-    const distinctUserTagIds = [
-      ...new Set(userTags.map((tag: any) => tag._id)),
-    ];
+    // const distinctUserTagIds = [
+    //   ...new Set(userTags.map((tag: any) => tag._id)),
+    // ];
+    const distinctUserTagIds = Array.from(
+      new Set(userTags.map((tag: any) => tag._id))
+    );
 
     const query: FilterQuery<typeof Question> = {
       $and: [
