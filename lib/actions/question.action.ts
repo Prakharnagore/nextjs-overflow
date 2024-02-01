@@ -10,6 +10,7 @@ import {
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
+  RecommendedParams,
 } from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
@@ -271,6 +272,88 @@ export const getTopQuestions = async () => {
       .limit(5);
 
     return topQuestions;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getRecommendedQuestions = async (params: RecommendedParams) => {
+  try {
+    connectToDatabase();
+    const { userId, page = 1, pageSize = 10, searchQuery } = params;
+
+    // find user
+    const user = await User.findOne({ clerkId: userId });
+
+    // if no user found
+
+    if (!user) {
+      throw new Error("No user found");
+    }
+
+    // pagination: skip = (page - 1) * pageSize
+    const skipAmount = (page - 1) * pageSize;
+
+    // find user's interactions
+    const userInteractions = await Interaction.find({ user: user._id })
+      .populate("tags")
+      .exec();
+
+    // extract tags from user's interactions
+
+    const userTags = userInteractions.reduce((tags, interaction) => {
+      if (interaction.tags) {
+        tags = tags.concat(interaction.tags);
+      }
+      return tags;
+    }, []);
+
+    // get distinct tag Ids for user interactions
+
+    // const distinctUserTagIds = [
+    //   ...new Set(userTags.map((tag: any) => tag._id)),
+    // ];
+    const distinctUserTagIds = Array.from(
+      new Set(userTags.map((tag: any) => tag._id))
+    );
+
+    const query: FilterQuery<typeof Question> = {
+      $and: [
+        { tags: { $in: distinctUserTagIds } }, // question with user's tag
+        { author: { $ne: user._id } }, // exclude user's own questions
+      ],
+    };
+
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+
+    const totalQuestions = await Question.countDocuments(query);
+
+    // recommended questions
+
+    const recommendedQuestions = await Question.find(query)
+      .populate({
+        path: "tags",
+        model: Tag,
+      })
+      .populate({
+        path: "author",
+        model: User,
+      })
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    const isNext = totalQuestions > skipAmount + recommendedQuestions.length;
+
+    return {
+      questions: recommendedQuestions,
+      isNext,
+    };
   } catch (error) {
     console.log(error);
     throw error;
