@@ -7,11 +7,10 @@ Live link: [Next.js Overflow](https://nextjs-overflow.vercel.app)
 ## Installation
 
 1. Clone the repository
-   **git clone https://github.com/your-username/nextjs-overflow.git**
 2. Install dependencies
-   **npm install**
+   - npm install
 3. Run the development server
-   **npm run dev**
+   - npm run dev
 
 ## Acknowledgements
 
