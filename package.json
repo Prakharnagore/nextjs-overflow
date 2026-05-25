@@ -7,6 +7,9 @@
     "email": "prakharnagore000@gmail.com",
     "url": "https://www.linkedin.com/in/prakharnagore/"
   },
+  "engines": {
+    "node": ">=24.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
